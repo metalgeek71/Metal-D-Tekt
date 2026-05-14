@@ -1,0 +1,201 @@
+@import "tailwindcss";
+
+/* ── Custom Theme Tokens ── */
+@theme {
+  --color-void: #0a0a0a;
+  --color-void-light: #111118;
+  --color-steel: #1a1a2e;
+  --color-steel-light: #252540;
+  --color-ember: #ff4500;
+  --color-ember-glow: #ff6a33;
+  --color-chrome: #c0c0c0;
+  --color-chrome-dim: #666680;
+  --color-rust: #8b4513;
+  --color-gold: #ffd700;
+  --color-blood: #dc143c;
+  --color-electric: #7b68ee;
+  --color-flame: #ff8c00;
+
+  --font-display: 'Orbitron', sans-serif;
+  --font-body: 'Inter', sans-serif;
+}
+
+/* ── Base Reset ── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-void);
+  color: var(--color-chrome);
+  min-height: 100dvh;
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ── Noise Texture Overlay ── */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: 
+    repeating-linear-gradient(
+      0deg,
+      transparent,
+      transparent 2px,
+      rgba(255,255,255,0.03) 2px,
+      rgba(255,255,255,0.03) 4px
+    );
+}
+
+#root {
+  position: relative;
+  z-index: 1;
+}
+
+/* ── Scrollbar ── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: var(--color-void);
+}
+::-webkit-scrollbar-thumb {
+  background: var(--color-steel-light);
+  border-radius: 3px;
+}
+
+/* ── Animations ── */
+@keyframes pulse-glow {
+  0%, 100% { text-shadow: 0 0 10px rgba(255,69,0,0.3), 0 0 40px rgba(255,69,0,0.1); }
+  50% { text-shadow: 0 0 20px rgba(255,69,0,0.6), 0 0 60px rgba(255,69,0,0.2); }
+}
+
+@keyframes scan-line {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(100vh); }
+}
+
+@keyframes fade-in-up {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes bpm-pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.15); }
+}
+
+@keyframes bar-shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 3s ease-in-out infinite;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.6s ease-out forwards;
+}
+
+.animate-bpm-pulse {
+  animation: bpm-pulse 0.5s ease-in-out;
+}
+
+/* ── Glass Card ── */
+.glass-card {
+  background: linear-gradient(135deg, rgba(26,26,46,0.8), rgba(26,26,46,0.4));
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  border: 1px solid rgba(192,192,192,0.08);
+  border-radius: 12px;
+  box-shadow: 
+    inset 0 1px 0 rgba(255,255,255,0.04),
+    0 4px 24px rgba(0,0,0,0.4);
+}
+
+/* ── Genre Bar Gradients ── */
+.bar-hair-metal {
+  background: linear-gradient(90deg, #ffd700, #ffaa00, #ffd700);
+  background-size: 200% 100%;
+}
+
+.bar-classic-metal {
+  background: linear-gradient(90deg, #dc143c, #8b0000, #dc143c);
+  background-size: 200% 100%;
+}
+
+.bar-prog-metal {
+  background: linear-gradient(90deg, #7b68ee, #4a3aad, #7b68ee);
+  background-size: 200% 100%;
+}
+
+.bar-hard-rock {
+  background: linear-gradient(90deg, #ff8c00, #cc5500, #ff8c00);
+  background-size: 200% 100%;
+}
+
+.bar-shimmer {
+  animation: bar-shimmer 3s linear infinite;
+}
+
+/* ── CTA Button ── */
+.btn-ember {
+  background: linear-gradient(135deg, var(--color-ember), #cc3700);
+  color: white;
+  font-family: var(--font-display);
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  border: none;
+  border-radius: 8px;
+  padding: 16px 32px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 0 20px rgba(255,69,0,0.3), 0 4px 16px rgba(0,0,0,0.4);
+  position: relative;
+  overflow: hidden;
+}
+
+.btn-ember:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0 30px rgba(255,69,0,0.5), 0 8px 24px rgba(0,0,0,0.5);
+}
+
+.btn-ember:active {
+  transform: translateY(0);
+}
+
+.btn-ember::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.1), transparent);
+  transform: translateX(-100%);
+  transition: transform 0.6s ease;
+}
+
+.btn-ember:hover::after {
+  transform: translateX(100%);
+}
+
+.btn-stop {
+  background: linear-gradient(135deg, #333, #222);
+  box-shadow: 0 0 10px rgba(0,0,0,0.3), 0 4px 16px rgba(0,0,0,0.4);
+}
+
+.btn-stop:hover {
+  box-shadow: 0 0 15px rgba(100,100,100,0.3), 0 8px 24px rgba(0,0,0,0.5);
+}
